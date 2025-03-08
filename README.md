@@ -46,4 +46,4 @@ npm install
 npm run dev
 
     npm run ejecuta un script definido en package.json.
-    dev generalmente inicia el entorno de desarrollo.
+    dev generalmente inicia el entorno de desarrollo. 
