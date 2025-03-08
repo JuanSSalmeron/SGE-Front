@@ -73,5 +73,3 @@ Una vez completados estos pasos, el frontend estará listo para su uso en el ent
 ## 5. Conclusión
 
 El módulo frontend del Sistema de Gestión Escolar (SGE) está diseñado con tecnologías modernas como Vue.js 3 y TailwindCSS, permitiendo una experiencia de usuario optimizada y un desarrollo eficiente. La implementación de herramientas como PrimeVue, Pinia y Axios facilita la gestión del estado y la comunicación con la API, asegurando una interfaz dinámica y funcional.
-
-Este documento proporciona una guía clara para la instalación y ejecución del frontend del proyecto, garantizando un desarrollo estructurado y profesional.
