@@ -1,49 +1,77 @@
-Sistema de Gestión Escolar
+# Sistema de Gestión Escolar (SGE)
 
-Problemática:
+## 1. Introducción
 
-En numerosas instituciones educativas, la gestión de estudiantes, cursos y calificaciones se lleva a cabo de manera manual o mediante sistemas con limitaciones operativas, lo que conlleva diversas problemáticas, entre ellas:
+En numerosas instituciones educativas, la gestión de estudiantes, cursos y calificaciones se lleva a cabo de manera manual o mediante sistemas con limitaciones operativas. Esto genera diversas problemáticas, tales como:
 
-    • Inexactitudes en el registro de calificaciones, derivadas de errores humanos o falta de automatización.
-    • Ausencia de un acceso centralizado a la información, dificultando la consulta y actualización de datos en tiempo real.
-    • Complejidad en la administración de usuarios y permisos, lo que puede comprometer la seguridad y el control del sistema.
-    • Carencia de reportes automáticos y herramientas de exportación de datos, limitando el análisis y la toma de decisiones basada en información precisa y oportuna.
+- **Errores en el registro de calificaciones**, derivados de fallas humanas o falta de automatización.
+- **Falta de acceso centralizado a la información**, lo que dificulta la consulta y actualización en tiempo real.
+- **Complejidad en la administración de usuarios y permisos**, afectando la seguridad y el control del sistema.
+- **Ausencia de reportes automáticos y herramientas de exportación de datos**, limitando el análisis y la toma de decisiones basada en información precisa.
 
-El Sistema de Gestión Escolar busca solucionar estos problemas proporcionando una plataforma digital que facilite la administración de los procesos académicos y administrativos.
+El Sistema de Gestión Escolar (SGE) busca solucionar estos problemas proporcionando una plataforma digital moderna, eficiente y segura para la administración académica y administrativa.
 
-Integrantes.
-Equipo #6:
-William Joel Chávez López
-Gabriel David Lizama Gómez
-Saúl García López
-Francisco Emmanuel Rojas Cerón
-Juan de Dios Salmerón Rivera (Líder del equipo)
+---
 
-Librerías.
-Tecnologías y Librerías por utilizar:
-- Frontend: Vue.js 3 con Composition API y TailwindCSS para la interfaz de usuario junto a material de Prime Vue.
-- Backend: .NET con Entity Framework y Dapper para la gestión de peticiones y operaciones del servidor.
-- Base de Datos: SQL Server para el almacenamiento de datos.
-- Autenticación: JWT (JSON Web Tokens) para la seguridad en el acceso del lado del servidor.
-- Gestión de Estado: Pinia para la administración del estado en Vue.js.
-- Validación de Formularios: VeeValidate y Yup para validaciones seguras.
-- Manejo de API: Axios para realizar peticiones HTTP.
-- PrimeVue
+## 2. Equipo de Desarrollo
 
-Como correr su proyecto:
+**Equipo #6:**
+- *JuanSSalmeron* **Juan de Dios Salmerón Rivera** *22393224* (Líder del equipo)
+- *SACPA* **William Joel Chávez López** *20393144*
+- *GabrieLag00* **Gabriel David Lizama Gómez** *22393278*
+- *alsaem5* **Saúl García López** *21393194*
+- *FrankRojas31* **Francisco Emmanuel Rojas Cerón** *22393186*
 
-cd SGE
+---
 
-    cd (Change Directory) es un comando para cambiar de directorio en la terminal.
-    SGE es el nombre de la carpeta a la que estás accediendo. Es donde probablemente está tu proyecto.
+## 3. Tecnologías y Librerías Utilizadas (Frontend)
 
-npm install
+- **Vue.js 3** con Composition API para el desarrollo de la interfaz de usuario.
+- **TailwindCSS** para el diseño y estilizado moderno.
+- **PrimeVue** para componentes visuales avanzados.
+- **Pinia** para la gestión eficiente del estado de la aplicación.
+- **VeeValidate y Yup** para la validación de formularios.
+- **Axios** para la comunicación con la API.
 
-    npm (Node Package Manager) es el gestor de paquetes de Node.js.
-    install descarga e instala todas las dependencias listadas en el archivo package.json de tu proyecto.
-    Crea una carpeta node_modules donde almacena las dependencias instaladas.
+---
 
-npm run dev
+## 4. Instalación y Ejecución del Proyecto (Frontend)
 
-    npm run ejecuta un script definido en package.json.
-    dev generalmente inicia el entorno de desarrollo. 
+### **Requisitos Previos**
+
+Antes de comenzar, asegúrese de tener instalados:
+
+- **Node.js** (v16 o superior)
+- **Administrador de paquetes npm o yarn**
+
+### **Pasos para Ejecutar el Proyecto**
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/JuanSSalmeron/SGE-Front
+   ```
+
+2. **Acceder al directorio del proyecto:**
+   ```bash
+   cd SGE
+   ```
+
+3. **Instalar dependencias del frontend:**
+   ```bash
+   npm install
+   ```
+
+4. **Ejecutar el entorno de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+Una vez completados estos pasos, el frontend estará listo para su uso en el entorno de desarrollo.
+
+---
+
+## 5. Conclusión
+
+El módulo frontend del Sistema de Gestión Escolar (SGE) está diseñado con tecnologías modernas como Vue.js 3 y TailwindCSS, permitiendo una experiencia de usuario optimizada y un desarrollo eficiente. La implementación de herramientas como PrimeVue, Pinia y Axios facilita la gestión del estado y la comunicación con la API, asegurando una interfaz dinámica y funcional.
+
+Este documento proporciona una guía clara para la instalación y ejecución del frontend del proyecto, garantizando un desarrollo estructurado y profesional.
