@@ -11,6 +11,14 @@ const router = createRouter({
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
     },
+    {
+      path: '/ExamplePrimeVue',
+      name: 'example',
+      component: () => import("@/views/ExamplePrimeVue.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
     // Example: Use Correctly routes protected
     {
       path: '/protected',
