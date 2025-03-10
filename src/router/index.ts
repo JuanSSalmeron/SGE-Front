@@ -3,6 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      name: 'example',
+      component: () => import("@/views/ExampleTailwind.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
     // Example: Use Correctly routes protected
     {
       path: '/protected',
