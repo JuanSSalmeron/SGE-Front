@@ -34,7 +34,7 @@ import { RouterLink } from 'vue-router';
         </RouterLink>
       </div>
       <div class="lg:flex lg:flex-1 lg:justify-end">
-        <RouterLink to="#" class="text-sm font-semibold text-[#10b981] hover:text-[#51b49c] transition">
+        <RouterLink to="/login" class="text-sm font-semibold text-[#10b981] hover:text-[#51b49c] transition">
           Iniciar sesión <span aria-hidden="true">→</span>
         </RouterLink>
       </div>
