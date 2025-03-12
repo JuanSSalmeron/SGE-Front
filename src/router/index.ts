@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'example',
+      name: 'examplenotfound',
       component: () => import("@/views/ExampleTailwind.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.
@@ -13,8 +13,24 @@ const router = createRouter({
     },
     {
       path: '/ExamplePrimeVue',
-      name: 'example',
+      name: 'examplenn',
       component: () => import("@/views/ExamplePrimeVue.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import("@/views/LoginView.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import("@/views/RegisterView.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
@@ -31,30 +47,30 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  const verifyAuth = true; // Check if user is authenticated
-  const publicRoutes = ['/login', '/register', '/NotFound'];
-  const requiresAuth = !publicRoutes.includes(to.path);
-  const isFirstLoad = from.name === null; // More reliable way to detect first load
+// router.beforeEach((to, from, next) => {
+//   const verifyAuth = true; // Check if user is authenticated
+//   const publicRoutes = ['/login', '/register', '/NotFound'];
+//   const requiresAuth = !publicRoutes.includes(to.path);
+//   const isFirstLoad = from.name === null; // More reliable way to detect first load
 
-  // Handle first page load scenario
-  if (isFirstLoad && to.path === '/') {
-    return next(verifyAuth ? '/dashboard' : '/login');
-  }
+//   // Handle first page load scenario
+//   if (isFirstLoad && to.path === '/') {
+//     return next(verifyAuth ? '/dashboard' : '/login');
+//   }
 
-  // Redirect unauthorized users trying to access protected routes
-  if (requiresAuth && !verifyAuth) {
-    return next('/login'); // Is a Example of the Login.
-  }
+//   // Redirect unauthorized users trying to access protected routes
+//   if (requiresAuth && !verifyAuth) {
+//     return next('/login'); // Is a Example of the Login.
+//   }
 
-  // Prevent authenticated users from accessing login/register pages
-  if (verifyAuth && (to.name === 'login' || to.name === 'register')) {
-    return next('/dashboard'); // Is a Example of the Dashboard
-  }
+//   // Prevent authenticated users from accessing login/register pages
+//   if (verifyAuth && (to.name === 'login' || to.name === 'register')) {
+//     return next('/dashboard'); // Is a Example of the Dashboard
+//   }
 
-  // Allow normal navigation if none of the above conditions were met
-  next();
-});
+//   // Allow normal navigation if none of the above conditions were met
+//   next();
+// });
 
 
 export default router
