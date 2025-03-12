@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'example',
+      name: 'examplenotfound',
       component: () => import("@/views/ExampleTailwind.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.

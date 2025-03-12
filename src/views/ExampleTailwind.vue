@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+import Form from '@/components/Form.vue';
 const msg = 'Hello word!'
 </script>
 <template>
@@ -6,5 +8,6 @@ const msg = 'Hello word!'
     <h1 class="text-3xl font-bold underline text-center">
       {{ msg }}
     </h1>
+    <Form />
   </div>
 </template>
