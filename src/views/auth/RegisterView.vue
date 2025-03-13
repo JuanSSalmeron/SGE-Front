@@ -1,51 +1,83 @@
+<script lang="ts" setup>
+import AppLogo from '@/components/global/AppLogo.vue'
+import { Button } from 'primevue';
+</script>
+
 <template>
-  <div
-    class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-500 p-4">
-    <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md text-center relative overflow-hidden">
-      <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 opacity-10 rounded-3xl">
+  <div class="font-sans">
+    <div class="relative min-h-screen flex items-center justify-center bg-[#f8f8f8]">
+      <div class="relative sm:max-w-sm w-full">
+        <div class="rounded-xl px-6 py-4 shadow-2xl bg-white">
+          <AppLogo :route="false" />
+          <label class="block mt-2 text-md text-gray-800 text-center font-semibold uppercase">
+            Registro
+          </label>
+          <form class="mt-2" @submit.prevent="">
+
+            <label class="block mb-2 text-sm font-medium">Nombre</label>
+            <div class="relative mb-4">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i class="pi pi-envelope text-gray-400" />
+              </div>
+              <input type="text"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                placeholder="Juan de Dios Salmeron Rivera" required />
+            </div>
+            <label class="block mb-2 text-sm font-medium">Correo Electrónico</label>
+            <div class="relative mb-4">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i class="pi pi-envelope text-gray-400" />
+              </div>
+              <input type="email"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                placeholder="ejemplo@gmail.com" required />
+            </div>
+
+            <label class="block mb-2 text-sm font-medium">Contraseña</label>
+            <div class="relative mb-[28px]">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i class="pi pi-lock text-gray-400" />
+              </div>
+              <input type="password"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                placeholder="••••••••" required />
+            </div>
+
+            <label class="block mb-2 text-sm font-medium">Confirmar contraseña</label>
+            <div class="relative mb-[28px]">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i class="pi pi-lock text-gray-400" />
+              </div>
+              <input type="password"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                placeholder="••••••••" required />
+            </div>
+
+            <div class="mt-5 flex">
+              <label class="inline-flex items-center w-full cursor-pointer">
+                <input type="checkbox" class="mt-1" name="terms" required />
+                <span class="ml-1 text-sm text-gray-600">Acepto los términos y condiciones</span>
+              </label>
+            </div>
+
+            <div class="mt-4">
+              <Button type="submit" class="w-full py-3 rounded-md shadow-md ">
+                Registrarse
+              </Button>
+            </div>
+            <div class="text-center w-full mt-3 mb-3">
+              <label class="text-sm">¿Ya tienes cuenta?</label>
+              <RouterLink to="/login" class="underline text-sm text-gray-600 hover:text-gray-900">
+                Inicia Sesión
+              </RouterLink>
+            </div>
+          </form>
+        </div>
+        <div class="text-center py-5">
+          <p class="text-xs">Copyright &copy; Sistema Gestor Escolar<br />
+            Todos los derechos Reservados</p>
+        </div>
       </div>
-      <h2 class="text-3xl font-extrabold text-gray-900 drop-shadow-md">Únete a SGE</h2>
-      <p class="text-gray-500 mt-2">Crea una cuenta y únete a la comunidad</p>
-
-      <form class="mt-6 space-y-4 relative z-10" @submit.prevent="handleRegister">
-        <div>
-          <input v-model="name" type="text" placeholder="Nombre completo"
-            class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-400 transition shadow-sm">
-        </div>
-        <div>
-          <input v-model="email" type="email" placeholder="Correo electrónico"
-            class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-400 transition shadow-sm">
-        </div>
-        <div>
-          <input v-model="password" type="password" placeholder="Contraseña"
-            class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-400 transition shadow-sm">
-        </div>
-
-        <button type="submit"
-          class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold p-3 rounded-xl hover:opacity-90 transition-all shadow-lg transform hover:scale-105">
-          Registrarse
-        </button>
-
-        <p class="mt-6 text-gray-700">
-          ¿Ya tienes cuenta?
-          <RouterLink to="/login" class="text-purple-500 font-semibold hover:underline">
-            Inicia sesión
-          </RouterLink>
-        </p>
-      </form>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
-
-const name = ref<string>('');
-const email = ref<string>('');
-const password = ref<string>('');
-
-const handleRegister = (): void => {
-  console.log('Registrando usuario:', name.value, email.value, password.value);
-};
-</script>
