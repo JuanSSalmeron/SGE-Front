@@ -5,8 +5,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'examplenotfound',
-      component: () => import("@/views/ExampleTailwind.vue"),
+      name: 'LandingPage',
+      component: () => import("@/views/landing/LandingView.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import("@/views/LoginView.vue"),
+      component: () => import("@/views/auth/LoginView.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
@@ -30,7 +30,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: () => import("@/views/RegisterView.vue"),
+      component: () => import("@/views/auth/RegisterView.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
