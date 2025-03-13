@@ -7,7 +7,7 @@ import { Button } from 'primevue';
   <div class="font-sans">
     <div class="relative min-h-screen flex items-center justify-center bg-[#f8f8f8]">
       <div class="relative sm:max-w-sm w-full">
-        <div class="rounded-xl px-6 py-4 shadow-2xl bg-white">
+        <div class="rounded-xl px-6 py-4 shadow-2xl bg-white mt-3">
           <AppLogo :route="false" />
           <label class="block mt-2 text-md text-gray-800 text-center font-semibold uppercase">
             Registro
