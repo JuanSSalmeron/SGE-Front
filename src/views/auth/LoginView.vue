@@ -1,87 +1,36 @@
 <script lang="ts" setup>
-import AppLogo from '@/layouts/global/AppLogo.vue'
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/yup'
-import * as yup from 'yup'
-import Swal from 'sweetalert2'
-
-const { errors, defineField, handleSubmit } = useForm({
-  validationSchema: toTypedSchema(
-    yup.object({
-      email: yup.string().email('Correo Incorrecto').required('El correo es requerido'),
-      password: yup
-        .string()
-        .min(8, 'La contraseña debe tener al menos 8 caracteres')
-        .required('La contraseña es requerida'),
-    })
-  ),
-})
-
-const [email, emailAttrs] = defineField('email', {
-  validateOnModelUpdate: true,
-})
-const [password, passwordAttrs] = defineField('password', {
-  validateOnModelUpdate: true,
-})
-
+import AppLogo from '@/components/global/AppLogo.vue'
+import { Button } from 'primevue';
 </script>
 
 <template>
   <div class="font-sans">
-    <div
-      class="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-100 bg-[url('@/assets/images/background-login.jpg')]">
-      <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
+    <div class="relative min-h-screen flex items-center justify-center bg-[#f8f8f8]">
       <div class="relative sm:max-w-sm w-full">
-        <div class="card bg-gray-500 shadow-lg w-full h-full rounded-3xl absolute transform -rotate-7"></div>
-        <div class="card bg-gray-400 shadow-lg w-full h-full rounded-3xl absolute transform rotate-6"></div>
-        <div class="relative w-full rounded-3xl px-6 py-4 bg-gray-100 shadow-md">
+        <div class="rounded-xl px-6 py-4 shadow-2xl bg-white">
           <AppLogo :route="false" />
           <label class="block mt-2 text-md text-gray-800 text-center font-semibold uppercase">
             Inicio Sesión
           </label>
-          <form class="mt-2" @submit.prevent="" novalidate>
+          <form class="mt-2" @submit.prevent="">
             <label class="block mb-2 text-sm font-medium">Correo Electrónico</label>
-            <div class="relative" v-bind="emailAttrs" :class="{ 'mb-4': !errors.email, 'mb-1': errors.email }">
+            <div class="relative mb-4">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg v-bind="emailAttrs" class="w-5 h-5"
-                  :class="{ 'text-gray-400': true, 'text-red-400': errors.email }" fill="currentColor"
-                  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                </svg>
+                <i class="pi pi-envelope text-gray-400" />
               </div>
-              <input type="email" v-model="email" v-bind="emailAttrs" :class="{
-                'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5': true,
-                'border-red-500': errors.email,
-              }" placeholder="ejemplo@gmail.com" required />
-            </div>
-            <div v-show="errors.email" class="mb-2">
-              <span v-if="errors.email" class="font-sans text-red-400 text-sm">
-                {{ errors.email }}
-              </span>
+              <input type="email"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                placeholder="ejemplo@gmail.com" required />
             </div>
 
             <label class="block mb-2 text-sm font-medium">Contraseña</label>
-            <div class="relative" v-bind="emailAttrs"
-              :class="{ 'mb-[28px]': !errors.password, 'mb-1': errors.password }">
+            <div class="relative mb-[28px]">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"
-                  v-bind="passwordAttrs" :class="{ 'text-gray-400': true, 'text-red-400': errors.password }">
-                  <path fill-rule="evenodd"
-                    d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z"
-                    clip-rule="evenodd" />
-                </svg>
+                <i class="pi pi-lock text-gray-400" />
               </div>
-              <input v-model="password" type="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                placeholder="••••••••" v-bind="passwordAttrs" :class="{
-                  'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5': true,
-                  'border-red-500': errors.password,
-                }" required />
-            </div>
-
-            <div v-show="errors.password" class="mb-4">
-              <span v-if="errors.password" class="text-red-400 text-sm">{{ errors.password }}</span>
+              <input type="password"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                placeholder="••••••••" required />
             </div>
 
             <div class="mt-5 flex">
@@ -97,10 +46,9 @@ const [password, passwordAttrs] = defineField('password', {
             </div>
 
             <div class="mt-4">
-              <button type="submit"
-                class="bg-gray-500 w-full py-3 rounded-md text-white shadow-xl transition duration-300 ease-in-out transform hover:-translate-x hover:scale-101 hover:bg-gray-600">
+              <Button type="submit" class="w-full py-3 rounded-md shadow-md ">
                 Iniciar Sesión
-              </button>
+              </Button>
             </div>
             <div class="text-center w-full mt-3 mb-3">
               <label class="text-sm">¿No tienes cuenta?</label>
@@ -109,6 +57,10 @@ const [password, passwordAttrs] = defineField('password', {
               </RouterLink>
             </div>
           </form>
+        </div>
+        <div class="text-center py-5">
+          <p class="text-xs">Copyright &copy; Sistema Gestor Escolar<br />
+            Todos los derechos Reservados</p>
         </div>
       </div>
     </div>
