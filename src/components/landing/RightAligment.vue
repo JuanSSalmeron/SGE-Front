@@ -4,15 +4,15 @@ import Button from 'primevue/button';
 </script>
 
 <template>
-  <div class="mt-20 relative min-h-[400rem] lg:min-h-0 bg-surface-0 dark:bg-surface-900 flex lg:flex-row flex-col">
+  <div class="mt-20 relative min-h-[400rem] lg:min-h-0 bg-gray-50 flex lg:flex-row flex-col">
     <div class="flex lg:flex lg:flex-row flex-col justify-center md:justify-normal h-full flex-1">
       <div class="relative flex-1 z-20 flex items-center justify-center">
         <div class="flex items-center justify-center h-full">
           <div class="w-full max-w-2xl px-6 py-12 lg:p-12 xl:p-16 text-center lg:text-left">
             <h1
               class="text-4xl xl:text-5xl font-bold text-surface-0 lg:text-surface-900 dark:text-surface-0 mb-6 !leading-tight">
-              <span class="block">¡Bienvenido!</span>
-              <span class="block text-primary mt-3">Sistema Gestor Escolar</span>
+              <span class="block">Bienvenido al</span>
+              <span class="block text-[#10b981]">Sistema Gestor Escolar</span>
             </h1>
 
             <p
@@ -39,9 +39,7 @@ import Button from 'primevue/button';
 
       <div class="absolute lg:relative inset-0 lg:inset-auto flex-1">
         <div class="absolute lg:hidden inset-0 z-10"></div>
-        <img
-          src="/src/assets/images/background.jpg"
-          alt="Sistema Gestor Escolar"
+        <img src="/src/assets/images/background.jpg" alt="Sistema Gestor Escolar"
           class="h-full w-full object-cover xl:[clip-path:polygon(12%_0,100%_0%,100%_100%,0_100%)]" />
       </div>
     </div>

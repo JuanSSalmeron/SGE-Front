@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router';
+import { routes } from './RoutesNav';
 </script>
 
 <template>
@@ -8,30 +9,17 @@ import { RouterLink } from 'vue-router';
       <div class="flex lg:flex-1">
         <RouterLink to="#" class="flex items-center gap-2">
           <span class="text-2xl font-bold text-[#10b981]">SGE</span>
-          <span class="text-sm font-medium text-gray-700">Sistema Gestor Escolar</span>
+          <span class="text-sm font-medium text-gray-700 mt-1">Sistema Gestor Escolar</span>
         </RouterLink>
       </div>
       <div class="lg:flex lg:gap-x-12">
-        <RouterLink to="#"
-          class="flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#10b981] transition">
-          <i class="pi pi-home text-lg"></i>
-          Inicio
-        </RouterLink>
-        <RouterLink to="#"
-          class="flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#10b981] transition">
-          <i class="pi pi-cog text-lg"></i>
-          Funcionalidades
-        </RouterLink>
-        <RouterLink to="#"
-          class="flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#10b981] transition">
-          <i class="pi pi-th-large text-lg"></i>
-          Módulos
-        </RouterLink>
-        <RouterLink to="#"
-          class="flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#10b981] transition">
-          <i class="pi pi-users text-lg"></i>
-          Nosotros
-        </RouterLink>
+        <div v-for="(route, index) in routes" :key="index">
+          <RouterLink :to="route.link"
+            class="flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#10b981] transition">
+            <i :class="route.icon" class="text-lg"></i>
+            {{ route.name }}
+          </RouterLink>
+        </div>
       </div>
       <div class="lg:flex lg:flex-1 lg:justify-end">
         <RouterLink to="/login" class="text-sm font-semibold text-[#10b981] hover:text-[#51b49c] transition">
