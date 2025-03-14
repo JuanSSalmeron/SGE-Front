@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/AboutUs',
       name: 'AboutUs',
-      component: () => import("@/views/AboutUs.vue"),
+      component: () => import("@/components/landing/AboutUs.vue"),
       meta: {
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
