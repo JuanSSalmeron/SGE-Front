@@ -2,7 +2,6 @@
 import AppLogo from '@/components/global/AppLogo.vue'
 import { Button } from 'primevue';
 
-//Comentario.
 </script>
 
 <template>
