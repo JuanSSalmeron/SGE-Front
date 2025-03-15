@@ -43,6 +43,14 @@ const router = createRouter({
         requiresAuth: false, // requiresAuth is a property obligatory.
       }
     },
+    {
+      path: '/password',
+      name: 'password',
+      component: () => import("@/views/auth/PasswordView.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
     // Example: Use Correctly routes protected
     {
       path: '/protected',
