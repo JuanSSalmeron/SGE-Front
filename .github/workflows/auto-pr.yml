@@ -6,7 +6,7 @@ on:
       - main
       - developer
   pull_request:
-    types: [closed]
+    types: [closed] # Solo se ejecuta cuando el PR se cierra (fusión o rechazo)
 
 permissions:
   contents: write
@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar el código
-        if: github.event_name == 'push'
         uses: actions/checkout@v4
 
       - name: Configurar Git
