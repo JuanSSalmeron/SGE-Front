@@ -42,7 +42,9 @@ import { Button } from 'primevue';
               </label>
               <div class="w-full text-right">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="#">
-                  ¿Olvidó su contraseña?
+                  <RouterLink to="/password" class="underline text-sm text-gray-600 hover:text-gray-900">
+                    ¿Olvidó su contraseña?
+              </RouterLink>
                 </a>
               </div>
             </div>

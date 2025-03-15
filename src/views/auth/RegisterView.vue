@@ -14,7 +14,7 @@ import { Button } from 'primevue';
           </label>
           <form class="mt-2" @submit.prevent="">
 
-            <label class="block mb-2 text-sm font-medium">Nombre</label>
+            <label class="block mb-2 text-sm font-medium">Nombre Completo</label>
             <div class="relative mb-4">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <i class="pi pi-envelope text-gray-400" />
@@ -43,7 +43,7 @@ import { Button } from 'primevue';
                 placeholder="••••••••" required />
             </div>
 
-            <label class="block mb-2 text-sm font-medium">Confirmar contraseña</label>
+            <label class="block mb-2 text-sm font-medium">Confirmar Contraseña</label>
             <div class="relative mb-[28px]">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <i class="pi pi-lock text-gray-400" />
