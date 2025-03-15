@@ -3,6 +3,46 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      name: 'LandingPage',
+      component: () => import("@/views/landing/LandingView.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
+    {
+      path: '/AboutUs',
+      name: 'AboutUs',
+      component: () => import("@/components/landing/AboutUs.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
+    {
+      path: '/ExamplePrimeVue',
+      name: 'examplenn',
+      component: () => import("@/views/ExamplePrimeVue.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import("@/views/auth/LoginView.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import("@/views/auth/RegisterView.vue"),
+      meta: {
+        requiresAuth: false, // requiresAuth is a property obligatory.
+      }
+    },
     // Example: Use Correctly routes protected
     {
       path: '/protected',
@@ -15,30 +55,30 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  const verifyAuth = true; // Check if user is authenticated
-  const publicRoutes = ['/login', '/register', '/NotFound'];
-  const requiresAuth = !publicRoutes.includes(to.path);
-  const isFirstLoad = from.name === null; // More reliable way to detect first load
+// router.beforeEach((to, from, next) => {
+//   const verifyAuth = true; // Check if user is authenticated
+//   const publicRoutes = ['/login', '/register', '/NotFound'];
+//   const requiresAuth = !publicRoutes.includes(to.path);
+//   const isFirstLoad = from.name === null; // More reliable way to detect first load
 
-  // Handle first page load scenario
-  if (isFirstLoad && to.path === '/') {
-    return next(verifyAuth ? '/dashboard' : '/login');
-  }
+//   // Handle first page load scenario
+//   if (isFirstLoad && to.path === '/') {
+//     return next(verifyAuth ? '/dashboard' : '/login');
+//   }
 
-  // Redirect unauthorized users trying to access protected routes
-  if (requiresAuth && !verifyAuth) {
-    return next('/login'); // Is a Example of the Login.
-  }
+//   // Redirect unauthorized users trying to access protected routes
+//   if (requiresAuth && !verifyAuth) {
+//     return next('/login'); // Is a Example of the Login.
+//   }
 
-  // Prevent authenticated users from accessing login/register pages
-  if (verifyAuth && (to.name === 'login' || to.name === 'register')) {
-    return next('/dashboard'); // Is a Example of the Dashboard
-  }
+//   // Prevent authenticated users from accessing login/register pages
+//   if (verifyAuth && (to.name === 'login' || to.name === 'register')) {
+//     return next('/dashboard'); // Is a Example of the Dashboard
+//   }
 
-  // Allow normal navigation if none of the above conditions were met
-  next();
-});
+//   // Allow normal navigation if none of the above conditions were met
+//   next();
+// });
 
 
 export default router
