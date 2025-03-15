@@ -4,6 +4,7 @@ import { routes } from './RoutesNav';
 
 const yearActually = new Date().getFullYear();
 
+
 </script>
 
 <template>
