@@ -4,7 +4,6 @@ on:
   push:
     branches-ignore:
       - main
-      - master
       - developer
 
 permissions:
@@ -16,32 +15,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Git
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
 
-      - name: Extract branch name
-        id: extract_branch
-        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-
       - name: Get last commit message and author
         id: last-commit
         run: |
           commit_message=$(git log -1 --pretty=%B)
+          commit_message_escaped=$(echo "$commit_message" | sed "s/'/'\\\\''/g")
+          echo "commit_message=$commit_message_escaped" >> $GITHUB_ENV
+
           commit_author=$(git log -1 --pretty=%an)
-          
-          # Guardar en variables de entorno
-          echo "commit_message=$commit_message" >> $GITHUB_ENV
-          echo "commit_author=$commit_author" >> $GITHUB_ENV
+          commit_author_escaped=$(echo "$commit_author" | sed "s/'/'\\\\''/g")
+          echo "commit_author=$commit_author_escaped" >> $GITHUB_ENV
 
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "${{ env.branch_name }}"
-          destination_branch: "developer"
-          pr_title: "${{ env.commit_author }}: ${{ env.commit_message }}"
-          pr_body: "Este PR fue generado automáticamente para fusionar los cambios de `${{ env.branch_name }}` en `developer`."
+          destination_branch: 'developer'
+          source_branch: '${{ github.ref }}'
+          pr_title: '${{ env.commit_author }}: ${{ env.commit_message }}'
+          pr_body: 'This is an automated pull request to merge changes from the new branch to the develop branch.'
           github_token: ${{ secrets.GITHUB_TOKEN }}
