@@ -2,6 +2,7 @@
 import AppLogo from '@/components/global/AppLogo.vue'
 import { Button } from 'primevue';
 
+
 </script>
 
 <template>
