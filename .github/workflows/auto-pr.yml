@@ -6,12 +6,21 @@ on:
       - main
       - developer
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions Bot"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -21,3 +30,4 @@ jobs:
           base: developer
           title: "Auto PR: Merge ${{ github.ref_name }} into developer"
           body: "Este Pull Request fue generado automáticamente después de un push a `${{ github.ref_name }}`."
+          delete-branch: true 
