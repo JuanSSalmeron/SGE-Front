@@ -1,6 +1,5 @@
 <template>
   <div>
-    <label :for="name">{{ label }}</label>
     <input :id="name" v-model="value" :type="type" />
     <span v-if="error">{{ errorMessage }}</span>
   </div>
