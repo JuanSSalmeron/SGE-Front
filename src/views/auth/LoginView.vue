@@ -1,7 +1,14 @@
 <script lang="ts" setup>
 import AppLogo from '@/components/global/AppLogo.vue'
 import { Button } from 'primevue';
+import FormInput from '@/components/FormInput.vue';
+// Validación de formulario
+import { validateForm } from '@/utils/validationHelpers';
 
+
+
+
+const { handleSubmit } = validateForm();
 
 </script>
 
@@ -20,9 +27,12 @@ import { Button } from 'primevue';
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <i class="pi pi-envelope text-gray-400" />
               </div>
-              <input type="email"
+              <FormInput type="email"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                placeholder="ejemplo@gmail.com" required />
+                placeholder="ejemplo@gmail.com" required
+                name="email"
+                label="Correo Electrónico"
+                />
             </div>
 
             <label class="block mb-2 text-sm font-medium">Contraseña</label>
