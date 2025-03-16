@@ -8,15 +8,8 @@ const router = createRouter({
       name: 'LandingPage',
       component: () => import("@/views/landing/LandingView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
-      }
-    },
-    {
-      path: '/AboutUs',
-      name: 'AboutUs',
-      component: () => import("@/components/landing/AboutUs.vue"),
-      meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
     {
@@ -24,7 +17,8 @@ const router = createRouter({
       name: 'examplenn',
       component: () => import("@/views/ExamplePrimeVue.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
     {
@@ -32,7 +26,8 @@ const router = createRouter({
       name: 'login',
       component: () => import("@/views/auth/LoginView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
     {
@@ -40,7 +35,8 @@ const router = createRouter({
       name: 'register',
       component: () => import("@/views/auth/RegisterView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
     {
@@ -48,16 +44,18 @@ const router = createRouter({
       name: 'password',
       component: () => import("@/views/auth/PasswordView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
-    // Example: Use Correctly routes protected
     {
-      path: '/protected',
-      name: 'protected',
-      component: () => import("@/views/ExampleProtected.vue"),
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/IndexView.vue'),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: true,
+        MenuOnly: true,
+        icon: 'pi pi-chart-pie'
       }
     }
   ],
