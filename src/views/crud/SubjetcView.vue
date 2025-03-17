@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SubjetcList from '@/components/CrudSubjects/SubjetcList.vue';
+import SubjetcList from '@/components/crud/SubjetcList.vue';
 </script>
 <template>
   <div>

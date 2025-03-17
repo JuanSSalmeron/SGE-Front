@@ -1,34 +1,20 @@
 <script setup lang="ts">
 import AppLogo from '@/components/global/AppLogo.vue';
+import SimpleLogo from '@/components/global/SimpleLogo.vue';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const date = ref('');
 const showDropdown = ref(false);
+const isSidebarCollapsed = ref(false);
+const currentYear = new Date().getFullYear();
 
 const hoursReal = () => {
   const now = new Date()
   const formatDate = now.toLocaleDateString()
   const formatHours = now.toLocaleTimeString()
-
   date.value = `${formatDate} ${formatHours}`
 }
-
-onMounted(() => {
-  hoursReal();
-  setInterval(hoursReal, 1000);
-});
-
-const RoutesOnlyMenu = computed(() => {
-  return useRouter().options.routes
-    .filter((x) => x.meta?.MenuOnly === true)
-    .map((route) => ({
-      ...route,
-      icon: route.meta?.icon || 'pi pi-circle'
-    }));
-});
-
-const currentYear = new Date().getFullYear();
 
 const toggleDropdown = (event: Event) => {
   event.stopPropagation();
@@ -39,7 +25,22 @@ const closeDropdown = () => {
   showDropdown.value = false;
 };
 
+const toggleSidebar = () => {
+  isSidebarCollapsed.value = !isSidebarCollapsed.value;
+};
+
+const RoutesOnlyMenu = computed(() => {
+  return useRouter().options.routes
+    .filter((x) => x.meta?.MenuOnly === true)
+    .map((route) => ({
+      ...route,
+      icon: route.meta?.icon || 'pi pi-circle'
+    }));
+});
+
 onMounted(() => {
+  hoursReal();
+  setInterval(hoursReal, 1000);
   document.addEventListener('click', closeDropdown);
 });
 
@@ -52,24 +53,30 @@ onUnmounted(() => {
   <div class="relative flex min-h-screen flex-col bg-[#e2e0e073]">
     <!-- Sidebar -->
     <div
-      class="fixed border-r border-[#4f4f4f44] bg-white shadow-2xl text-black w-[250px] space-y-5 inset-y-0 left-0 transform transition duration-200 ease-in-out z-10">
-      <AppLogo :route="false" />
+      class="fixed border-r border-[#4f4f4f44] bg-white shadow-2xl text-black space-y-5 inset-y-0 left-0 transform transition-all duration-200 ease-in-out z-10"
+      :class="[isSidebarCollapsed ? 'w-[60px]' : 'w-[250px]']">
+      <SimpleLogo v-show="isSidebarCollapsed" :route="false" />
+      <AppLogo v-show="!isSidebarCollapsed" :route="false" :class="isSidebarCollapsed ? 'w-8 h-8' : 'w-full'" />
 
-      <nav class="mt-4">
+      <nav class="mt-4" :class="[isSidebarCollapsed ? 'space-y-2' : '']">
         <RouterLink v-for="route in RoutesOnlyMenu" :key="route.path" :to="route.path"
-          :class="{ 'bg-[#10b98170] text-[#186219]': $route.path === route.path }"
-          class="mt-1 block px-4 py-3 hover:bg-[#10b981bb] hover:text-white transform duration-200 ease-in">
-          <i :class="route.icon" class="mr-2"></i>
-          {{ route.name }}
+          v-tooltip="isSidebarCollapsed ? { value: route.name, class: '' } : null"
+          class="mt-1 block py-3 hover:bg-[#10b981bb] hover:text-white transform duration-200 ease-in" :class="[
+            $route.path === route.path ? 'bg-[#10b98170] text-[#186219]' : '',
+            isSidebarCollapsed ? 'px-4 text-center' : 'px-4'
+          ]">
+          <i :class="[route.icon, !isSidebarCollapsed ? 'mr-2' : '']"></i>
+          <span v-if="!isSidebarCollapsed">{{ route.name }}</span>
         </RouterLink>
       </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col ml-[250px]">
+    <div class="flex-1 flex flex-col transition-all duration-200"
+      :class="[isSidebarCollapsed ? 'ml-[60px]' : 'ml-[250px]']">
       <!-- Header -->
       <div class="flex bg-white shadow-2xl shadow-[#00000015] px-2 py-4 relative z-10 items-center">
-        <button class="ml-4 p-1 rounded-xs">
+        <button @click="toggleSidebar" class="ml-4 p-1 rounded-xs">
           <i class="pi pi-bars size-6 hover:text-[#10b981bb] transition ease-in duration-200"></i>
         </button>
 

@@ -1,131 +1,180 @@
-<template>
-  <div class="p-6">
-
-    <div class="flex justify-end mb-4">
-      <Button
-        label="Nuevo"
-        icon="pi pi-plus"
-        class="bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded-md transition-colors"
-        @click="handleCreate"
-      />
-    </div>
-
-
-    <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-      <!-- Encabezado con búsqueda global -->
-      <div class="flex justify-end items-center p-4 border-b border-gray-200">
-        <div class="relative w-full sm:w-64">
-          <InputText
-            v-model="globalFilter"
-            placeholder="Buscar..."
-            class="pl-12 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 placeholder-gray-400 text-sm"
-          />
-          <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-            <i class="pi pi-search text-base" />
-          </span>
-        </div>
-      </div>
-
-      <div class="overflow-x-auto">
-        <DataTable
-          :value="data"
-          paginator
-          :rows="5"
-          dataKey="id"
-          :loading="loading"
-          responsiveLayout="scroll"
-          class="w-full border-0"
-        >
-
-          <template #empty>
-            <div class="text-center text-gray-500 py-4">No se encontraron registros.</div>
-          </template>
-
-
-          <template #loading >
-            <div class="text-center text-gray-500 py-4">Cargando datos. Por favor espera...</div>
-          </template>
-
-
-          <Column
-            v-for="column in columns"
-            :key="column.field"
-            :field="column.field as string"
-            :header="column.header"
-            :style="{ minWidth: '12rem' }"
-          >
-            <template #body="{ data }">
-              {{ data[column.field] }}
-            </template>
-          </Column>
-
-          <Column header="Acciones" :style="{ minWidth: '10rem' }">
-            <template #body="{ data }">
-              <div class="flex gap-2">
-                <Button
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-text p-button-primary"
-                  @click="handleEdit(data.id)"
-                />
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-text p-button-danger"
-                  @click="handleDelete(data.id)"
-                />
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 
-// Props tipados
+// Interfaces tipadas
 interface ColumnConfig<T> {
   field: keyof T;
   header: string;
+  sortable?: boolean;
+  filterable?: boolean;
 }
 
+interface TableData {
+  id: number;
+  [key: string]: any;
+}
+
+// Props con tipado genérico
 const props = defineProps<{
-  data: { id: number }[];
-  columns: ColumnConfig<{ id: number } & any>[];
+  title: string;
+  data: TableData[];
+  columns: ColumnConfig<TableData>[];
+  loading?: boolean;
 }>();
 
-// Emits
+// Emits tipados
 const emit = defineEmits<{
   (e: 'edit', id: number): void;
   (e: 'delete', id: number): void;
   (e: 'create'): void;
 }>();
 
-const loading = ref(false);
+// Estados reactivos
 const globalFilter = ref('');
+const rowsPerPage = ref(7);
 
-// Actions
-const handleEdit = (id: number) => {
-  emit('edit', id);
-};
+// Computeds para filtrado
+const filteredData = computed(() => {
+  if (!globalFilter.value) return props.data;
+
+  const searchTerm = globalFilter.value.toLowerCase();
+  return props.data.filter(item =>
+    Object.values(item).some(value =>
+      String(value).toLowerCase().includes(searchTerm)
+    )
+  );
+});
+
+// Handlers de acciones
+const handleEdit = (id: number) => emit('edit', id);
 
 const handleDelete = (id: number) => {
-  if (confirm(`¿Estás seguro de que deseas eliminar el registro con ID ${id}?`)) {
+  if (window.confirm(`¿Estás seguro de que deseas eliminar el registro con ID ${id}?`)) {
     emit('delete', id);
   }
 };
 
-const handleCreate = () => {
-  emit('create');
-};
+const handleCreate = () => emit('create');
 
-// Filtro global sin funcionalidad aun xd
-const onGlobalFilter = () => {
-  console.log('Filtro global:', globalFilter.value);
-};
+const tableAriaLabel = 'Tabla de datos interactiva';
 </script>
+
+<template>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-2 py-6">
+    <h2
+      class="text-2xl font-bold text-gray-900 mb-4 sm:text-3xl md:text-4xl lg:leading-tight transition-all duration-200">
+      {{ props.title }}
+    </h2>
+    <!-- Header con controles -->
+    <div class="flex flex-col sm:flex-row justify-end items-center mb-6 gap-4">
+      <!-- Contenedor de controles -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+        <!-- Campo de búsqueda -->
+        <IconField class="w-full max-w-[20rem]">
+          <InputIcon class="pi pi-search" />
+          <InputText v-model="globalFilter" placeholder="Buscar..."
+            class="w-full p-2 text-sm border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+            aria-label="Campo de búsqueda global" />
+        </IconField>
+
+        <!-- Botón Nuevo -->
+        <Button label="Nuevo" icon="pi pi-plus" class="p-button-raised p-button-success w-full sm:w-auto min-w-[100px]"
+          @click="handleCreate" aria-label="Crear nuevo registro" />
+      </div>
+    </div>
+
+    <!-- Tabla responsive -->
+    <div class="card bg-white rounded-md shadow-sm overflow-hidden">
+      <DataTable :value="filteredData" :loading="props.loading" :rows="rowsPerPage" paginator responsiveLayout="scroll"
+        dataKey="id" class="p-datatable-sm" :aria-label="tableAriaLabel" :paginatorTemplate="{
+          layout: 'PrevPageLink PageLinks NextPageLink RowsPerPageDropdown CurrentPageReport',
+          CurrentPageReport: 'Mostrando {first} a {last} de {totalRecords} registros'
+        }" :rowsPerPageOptions="[5, 10, 15, 25]">
+        <!-- Mensajes personalizados -->
+        <template #empty>
+          <div class="py-4 text-center text-gray-500">
+            No se encontraron registros que coincidan con la búsqueda
+          </div>
+        </template>
+
+        <template #loading>
+          <div class="py-4 text-center text-gray-500 flex items-center justify-center gap-2">
+            <i class="pi pi-spin pi-spinner" />
+            Cargando datos...
+          </div>
+        </template>
+
+        <!-- Columnas dinámicas -->
+        <Column v-for="col in columns" :key="col.field as string" :field="col.field as string" :header="col.header"
+          :sortable="col.sortable ?? false" :filterable="col.filterable ?? false"
+          headerClass="bg-gray-50 text-gray-700 font-semibold" class="text-sm">
+          <template #body="{ data }">
+            <span class="truncate block">{{ data[col.field] }}</span>
+          </template>
+        </Column>
+
+        <!-- Columna de acciones -->
+        <Column header="Acciones" headerClass="bg-gray-50 text-gray-700 font-semibold" class="w-32">
+          <template #body="{ data }">
+            <div class="flex gap-2 justify-center">
+              <Button icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-primary"
+                @click="handleEdit(data.id)" aria-label="Editar registro" />
+              <Button icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
+                @click="handleDelete(data.id)" aria-label="Eliminar registro" />
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+@media (max-width: 640px) {
+  .p-datatable {
+    font-size: 0.875rem;
+  }
+
+  .p-button {
+    padding: 0.5rem;
+  }
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+}
+
+.p-button-success {
+  background-color: #10b981;
+  border-color: #10b981;
+}
+
+.p-button-success:hover {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+@media (max-width: 640px) {
+  h2 {
+    font-size: 1.5rem;
+    /* 24px en mobile */
+    line-height: 2rem;
+    /* Leading ajustado */
+    margin-bottom: 1rem;
+    /* Menos espacio en mobile */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  h2 {
+    font-size: 1.875rem;
+    /* 30px en sm */
+  }
+}
+</style>
