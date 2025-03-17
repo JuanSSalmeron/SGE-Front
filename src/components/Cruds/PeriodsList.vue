@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import GeneralTable from './GeneralTable.vue';
+import GeneralTable from '@/components/Cruds/GeneralTable.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';

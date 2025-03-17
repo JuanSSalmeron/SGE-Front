@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <div class="p-6 bg-gray-100">
-      <h2 class="text-2xl font-bold text-gray-700 mb-4">Cursos Escolares</h2>
+      <h2 class="text-2xl font-bold text-gray-700 mb-4">Estudiantes</h2>
       <GeneralTable :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
         @create="openCreateModal" />
 
@@ -40,22 +40,23 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import GeneralTable from './GeneralTable.vue';
+import GeneralTable from '@/components/Cruds/GeneralTable.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import AppLayout from '@/layout/AppLayout.vue';
 
 const dataEntity = ref([
-  { id: 1, nombre: '2024', descripcion: '22393278' },
-  { id: 2, nombre: '2025', descripcion: '22393277' },
-  { id: 3, nombre: '2026', descripcion: '22393278' },
+  { id: 1, nombre: 'Emiliano', matricula: '22393278', fechaIngreso: '2025-01-15', estado: 'activo' },
+  { id: 2, nombre: 'Aldair', matricula: '22393277', fechaIngreso: '2025-01-15', estado: 'activo' },
+  { id: 3, nombre: 'Julian', matricula: '22393278', fechaIngreso: '2025-01-15', estado: 'baja' },
 ]);
 
 const columns = [
   { field: 'nombre', header: 'Nombre' },
-  { field: 'descripcion', header: 'Descripción' },
-
+  { field: 'matricula', header: 'Matricula' },
+  { field: 'fechaIngreso', header: 'Fecha de Ingreso' },
+  { field: 'estado', header: 'Estado' },
 ];
 
 const showCreateModal = ref(false);
