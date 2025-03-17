@@ -1,9 +1,8 @@
 <template>
   <AppLayout>
     <div class="p-6 bg-gray-100">
-      <h2 class="text-2xl font-bold text-gray-700 mb-4">Grupos</h2>
-      <GeneralTable :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
-        @create="openCreateModal" />
+      <GeneralTable :title="'Materias'" :data="dataEntity" :columns="columns" @edit="openEditModal"
+        @delete="handleDelete" @create="openCreateModal" />
 
       <!-- Modal para Crear -->
       <Dialog v-model:visible="showCreateModal" header="Crear Registro" :modal="true" class="rounded-lg shadow-lg">
@@ -40,16 +39,17 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import GeneralTable from '@/components/Cruds/GeneralTable.vue';
+import GeneralTable from '@/components/GeneralTable.vue';
+import type { Subject } from '@/types/Subject'; // Importamos el tipo
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import AppLayout from '@/layout/AppLayout.vue';
 
-const dataEntity = ref([
-  { id: 1, nombre: 'IDYGS81', descripcion: '22393278' },
-  { id: 2, nombre: 'IDYGS82', descripcion: '22393277' },
-  { id: 3, nombre: 'IDYGS83', descripcion: '22393278' },
+const dataEntity = ref<Subject[]>([
+  { id: 1, nombre: 'Español', descripcion: '22393278' },
+  { id: 2, nombre: 'Matemáticas', descripcion: '22393277' },
+  { id: 3, nombre: 'Inglés', descripcion: '22393278' },
 ]);
 
 const columns = [
@@ -60,7 +60,7 @@ const columns = [
 
 const showCreateModal = ref(false);
 const showEditModal = ref(false);
-const newItem = ref({});
+const newItem = ref<Subject>({} as Subject);
 const editItem = ref({});
 const currentEditId = ref(null);
 

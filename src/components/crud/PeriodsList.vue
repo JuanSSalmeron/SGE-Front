@@ -1,8 +1,7 @@
 <template>
   <AppLayout>
     <div class="p-6 bg-gray-100">
-      <h2 class="text-2xl font-bold text-gray-700 mb-4">Periodos</h2>
-      <GeneralTable :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
+      <GeneralTable :title="'Periodos'" :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
         @create="openCreateModal" />
 
       <!-- Modal para Crear -->
@@ -40,7 +39,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import GeneralTable from '@/components/Cruds/GeneralTable.vue';
+import GeneralTable from '@/components/GeneralTable.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';

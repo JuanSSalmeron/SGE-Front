@@ -39,6 +39,16 @@ const router = createRouter({
         MenuOnly: false,
       }
     },
+     {
+      path: '/:patchMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/errors/NotFoundView.vue'),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: false,
+      },
+    },
+
 
     //Rutas del Navbars
     {
@@ -91,7 +101,7 @@ const router = createRouter({
         icon: 'pi pi-th-large'
       }
     },
-        {
+    {
       path: '/groups',
       name: 'Grupos',
       component: () => import("@/views/crud/GroupsView.vue"),
