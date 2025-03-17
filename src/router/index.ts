@@ -13,9 +13,45 @@ const router = createRouter({
       }
     },
     {
-      path: '/ExamplePrimeVue',
-      name: 'examplenn',
-      component: () => import("@/views/ExamplePrimeVue.vue"),
+      path: '/students',
+      name: 'estudiantes',
+      component: () => import("@/views/crud/StudentView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: false,
+      }
+    },
+    {
+      path: '/courses',
+      name: 'cursos',
+      component: () => import("@/views/crud/CoursesView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: false,
+      }
+    },
+    {
+      path: '/groups',
+      name: 'grupos',
+      component: () => import("@/views/crud/GroupsView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: false,
+      }
+    },
+    {
+      path: '/periods',
+      name: 'periodos',
+      component: () => import("@/views/crud/PeriodsView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: false,
+      }
+    },
+    {
+      path: '/subjects',
+      name: 'materias',
+      component: () => import("@/views/crud/SubjetcView.vue"),
       meta: {
         requiresAuth: false,
         MenuOnly: false,

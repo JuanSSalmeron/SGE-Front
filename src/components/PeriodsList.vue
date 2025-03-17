@@ -1,6 +1,6 @@
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
-    <h2 class="text-2xl font-bold text-gray-700 mb-4">Estudiantes</h2>
+    <h2 class="text-2xl font-bold text-gray-700 mb-4">Periodos</h2>
     <GeneralTable :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete" @create="openCreateModal" />
 
     <!-- Modal para Crear -->
@@ -45,16 +45,17 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 
 const dataEntity = ref([
-  { id: 1, nombre: 'Emiliano', matricula: '22393278', fechaIngreso: '2025-01-15', estado: 'activo' },
-  { id: 2, nombre: 'Aldair', matricula: '22393277', fechaIngreso: '2025-01-15', estado: 'activo' },
-  { id: 3, nombre: 'Julian', matricula: '22393278', fechaIngreso: '2025-01-15', estado: 'baja' },
+  { id: 1, nombre: 'Emiliano', descripcion: '22393278', fechaInicio: '2025-01-15', fechaFin: '2025-01-15', estatusPeriodo: 'activo' },
+  { id: 2, nombre: 'Aldair', descripcion: '22393277', fechaInicio: '2025-01-15', fechaFin: '2025-01-15', estatusPeriodo: 'activo' },
+  { id: 3, nombre: 'Julian', descripcion: '22393278', fechaInicio: '2025-01-15', fechaFin: '2025-01-15', estatusPeriodo: 'baja' },
 ]);
 
 const columns = [
   { field: 'nombre', header: 'Nombre' },
-  { field: 'matricula', header: 'Matricula' },
-  { field: 'fechaIngreso', header: 'Fecha de Ingreso' },
-  { field: 'estado', header: 'Estado' },
+  { field: 'descripcion', header: 'Descipción' },
+  { field: 'fechaInicio', header: 'Fecha de Inicio' },
+  { field: 'fechaFin', header: 'Fecha de Fin' },
+  { field: 'estatusPeriodo', header: 'Estado de Periodo' },
 ];
 
 const showCreateModal = ref(false);
