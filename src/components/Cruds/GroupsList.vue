@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <div class="p-6 bg-gray-100">
-      <h2 class="text-2xl font-bold text-gray-700 mb-4">Materias</h2>
+      <h2 class="text-2xl font-bold text-gray-700 mb-4">Grupos</h2>
       <GeneralTable :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
         @create="openCreateModal" />
 
@@ -40,17 +40,16 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import GeneralTable from './GeneralTable.vue';
+import GeneralTable from '@/components/Cruds/GeneralTable.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import App from '@/App.vue';
 import AppLayout from '@/layout/AppLayout.vue';
 
 const dataEntity = ref([
-  { id: 1, nombre: 'Español', descripcion: '22393278' },
-  { id: 2, nombre: 'Matemáticas', descripcion: '22393277' },
-  { id: 3, nombre: 'Inglés', descripcion: '22393278' },
+  { id: 1, nombre: 'IDYGS81', descripcion: '22393278' },
+  { id: 2, nombre: 'IDYGS82', descripcion: '22393277' },
+  { id: 3, nombre: 'IDYGS83', descripcion: '22393278' },
 ]);
 
 const columns = [

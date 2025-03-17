@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <div class="p-6 bg-gray-100">
-      <h2 class="text-2xl font-bold text-gray-700 mb-4">Grupos</h2>
+      <h2 class="text-2xl font-bold text-gray-700 mb-4">Cursos Escolares</h2>
       <GeneralTable :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
         @create="openCreateModal" />
 
@@ -40,47 +40,56 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import GeneralTable from './GeneralTable.vue';
+import GeneralTable from '@/components/Cruds/GeneralTable.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import AppLayout from '@/layout/AppLayout.vue';
+import type { Courses } from '@/types/Courses'; // Importamos el tipo desde types.ts
+ // Importamos el tipo desde types.ts
 
-const dataEntity = ref([
-  { id: 1, nombre: 'IDYGS81', descripcion: '22393278' },
-  { id: 2, nombre: 'IDYGS82', descripcion: '22393277' },
-  { id: 3, nombre: 'IDYGS83', descripcion: '22393278' },
+// Definimos el tipo de los datos y columnas fuera de las variables reactivas
+type CourseEntity = Courses;
+
+// Datos iniciales tipados
+const dataEntity = ref<CourseEntity[]>([
+  { id: 1, name: '2024', description: '22393278' },
+  { id: 2, name: '2025', description: '22393277' },
+  { id: 3, name: '2026', description: '22393278' },
 ]);
 
-const columns = [
-  { field: 'nombre', header: 'Nombre' },
-  { field: 'descripcion', header: 'Descripción' },
-
+// Columnas tipadas
+const columns: { field: keyof CourseEntity; header: string }[] = [
+  { field: 'name', header: 'Nombre' },
+  { field: 'description', header: 'Descripción' },
 ];
 
+// Variables reactivas tipadas con CourseEntity
 const showCreateModal = ref(false);
 const showEditModal = ref(false);
-const newItem = ref({});
-const editItem = ref({});
-const currentEditId = ref(null);
+const newItem = ref<CourseEntity>({} as CourseEntity); // Tipo definido fuera
+const editItem = ref<CourseEntity>({} as CourseEntity); // Tipo definido fuera
+const currentEditId = ref<number | null>(null);
 
+// Funciones
 const openCreateModal = () => {
-  newItem.value = { id: dataEntity.value.length + 1 };
-  columns.forEach(col => {
-    newItem.value[col.field] = '';
-  });
+  newItem.value = {
+    id: dataEntity.value.length + 1,
+    name: '',
+    description: ''
+  };
   showCreateModal.value = true;
 };
 
 const handleCreate = () => {
-  if (newItem.value.nombre) {
+  if (newItem.value.name) {
     dataEntity.value.push({ ...newItem.value });
     console.log(`Registro creado con ID: ${newItem.value.id}`);
   }
   showCreateModal.value = false;
 };
 
-const openEditModal = (id) => {
+const openEditModal = (id: number) => {
   const item = dataEntity.value.find(item => item.id === id);
   if (item) {
     editItem.value = { ...item };
@@ -98,7 +107,7 @@ const handleEdit = () => {
   showEditModal.value = false;
 };
 
-const handleDelete = (id) => {
+const handleDelete = (id: number) => {
   dataEntity.value = dataEntity.value.filter(item => item.id !== id);
   console.log(`Registro eliminado con ID: ${id}`);
 };
