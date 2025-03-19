@@ -1,8 +1,8 @@
 <template>
   <AppLayout>
-    <div class="p-6 bg-gray-100">
-      <GeneralTable :title="'Periodos'" :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
-        @create="openCreateModal" />
+    <div class="p-6">
+      <GeneralTable :title="'Periodos'" :data="dataEntity" :columns="columns" @edit="openEditModal"
+        @delete="handleDelete" @create="openCreateModal" />
 
       <!-- Modal para Crear -->
       <Dialog v-model:visible="showCreateModal" header="Crear Registro" :modal="true" class="rounded-lg shadow-lg">

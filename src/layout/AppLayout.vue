@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import AppLogo from '@/components/global/AppLogo.vue';
 import SimpleLogo from '@/components/global/SimpleLogo.vue';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const date = ref('');
 const showDropdown = ref(false);
 const isSidebarCollapsed = ref(false);
 const currentYear = new Date().getFullYear();
+const isMobile = ref<boolean>(false);
 
 const hoursReal = () => {
-  const now = new Date()
-  const formatDate = now.toLocaleDateString()
-  const formatHours = now.toLocaleTimeString()
-  date.value = `${formatDate} ${formatHours}`
-}
+  const now = new Date();
+  const formatDate = now.toLocaleDateString();
+  const formatHours = now.toLocaleTimeString();
+  date.value = `${formatDate} ${formatHours}`;
+};
 
 const toggleDropdown = (event: Event) => {
   event.stopPropagation();
@@ -38,14 +39,27 @@ const RoutesOnlyMenu = computed(() => {
     }));
 });
 
-onMounted(() => {
+const updateMobile = async () => {
+  isMobile.value = window.innerWidth <= 768;
+  if (isMobile.value) {
+    isSidebarCollapsed.value = true; // Colapsado por defecto en móviles
+  }
+};
+
+onBeforeMount(async () => {
+  await updateMobile();
+  window.addEventListener('resize', updateMobile);
+})
+
+onMounted(async () => {
   hoursReal();
   setInterval(hoursReal, 1000);
   document.addEventListener('click', closeDropdown);
 });
 
-onUnmounted(() => {
+onUnmounted(async () => {
   document.removeEventListener('click', closeDropdown);
+  window.removeEventListener('resize', updateMobile);
 });
 </script>
 
@@ -53,27 +67,35 @@ onUnmounted(() => {
   <div class="relative flex min-h-screen flex-col bg-[#e2e0e073]">
     <!-- Sidebar -->
     <div
-      class="fixed border-r border-[#4f4f4f44] bg-white shadow-2xl text-black space-y-5 inset-y-0 left-0 transform transition-all duration-200 ease-in-out z-10"
-      :class="[isSidebarCollapsed ? 'w-[60px]' : 'w-[250px]']">
-      <SimpleLogo v-show="isSidebarCollapsed" :route="false" />
-      <AppLogo v-show="!isSidebarCollapsed" :route="false" :class="isSidebarCollapsed ? 'w-8 h-8' : 'w-full'" />
+      class="fixed border-r border-[#4f4f4f44] bg-white shadow-2xl text-black space-y-5 inset-y-0 left-0 transform z-10"
+      :class="[
+        isSidebarCollapsed ? 'w-[60px]' : (isMobile ? 'w-[120px]' : 'w-[250px]'),
+      ]" style="transition: width 0.2s ease-in-out;">
+      <SimpleLogo v-show="isSidebarCollapsed || isMobile" :route="true" :redirect="'/dashboard'" />
+      <AppLogo v-show="!isSidebarCollapsed && !isMobile" :route="true" :redirect="'/dashboard'" :class="'w-full'" />
 
-      <nav class="mt-4" :class="[isSidebarCollapsed ? 'space-y-2' : '']">
+      <nav class="mt-4" :class="[isSidebarCollapsed ? 'space-y-2' : 'space-y-1']">
         <RouterLink v-for="route in RoutesOnlyMenu" :key="route.path" :to="route.path"
           v-tooltip="isSidebarCollapsed ? { value: route.name, class: '' } : null"
-          class="mt-1 block py-3 hover:bg-[#10b981bb] hover:text-white transform duration-200 ease-in" :class="[
+          class="mt-1 block py-3 hover:bg-[#10b981bb] hover:text-white" :class="[
             $route.path === route.path ? 'bg-[#10b98170] text-[#186219]' : '',
-            isSidebarCollapsed ? 'px-4 text-center' : 'px-4'
-          ]">
-          <i :class="[route.icon, !isSidebarCollapsed ? 'mr-2' : '']"></i>
-          <span v-if="!isSidebarCollapsed">{{ route.name }}</span>
+            isSidebarCollapsed ? 'px-4 text-center' : 'px-4',
+          ]" style="transition: background-color 0.2s ease-in, color 0.2s ease-in;">
+          <i :class="[
+            route.icon,
+            isSidebarCollapsed ? 'text-base' : (isMobile ? 'text-sm' : 'text-base'),
+          ]"></i>
+          <span v-if="!isSidebarCollapsed" :class="[isMobile ? 'text-sm ml-2' : 'text-base ml-3']">
+            {{ route.name }}
+          </span>
         </RouterLink>
       </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col transition-all duration-200"
-      :class="[isSidebarCollapsed ? 'ml-[60px]' : 'ml-[250px]']">
+    <div class="flex-1 flex flex-col transition-all duration-200" :class="[
+      isSidebarCollapsed ? 'ml-[60px]' : (isMobile ? 'ml-[120px]' : 'ml-[250px]'),
+    ]">
       <!-- Header -->
       <div class="flex bg-white shadow-2xl shadow-[#00000015] px-2 py-4 relative z-10 items-center">
         <button @click="toggleSidebar" class="ml-4 p-1 rounded-xs">
@@ -109,7 +131,7 @@ onUnmounted(() => {
       </div>
 
       <!-- Content -->
-      <div class="flex-1">
+      <div class="flex-1 px-4 py-6">
         <slot></slot>
       </div>
 

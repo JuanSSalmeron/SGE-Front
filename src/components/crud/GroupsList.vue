@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="p-6 bg-gray-100">
+    <div class="p-6">
       <GeneralTable :title="'Grupos'" :data="dataEntity" :columns="columns" @edit="openEditModal" @delete="handleDelete"
         @create="openCreateModal" />
 
