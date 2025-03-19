@@ -89,24 +89,24 @@ const tableAriaLabel = 'Tabla de datos interactiva';
       </div>
     </div>
 
-    <!-- Tabla responsive -->
+    <!-- Contenedor de la tabla con manejo de carga -->
     <div class="card bg-white rounded-md shadow-sm overflow-hidden">
-      <DataTable :value="filteredData" :loading="props.loading" :rows="rowsPerPage" paginator responsiveLayout="scroll"
+      <!-- Mensaje de carga global -->
+      <div v-if="props.loading" class="py-4 text-center text-gray-500 flex items-center justify-center gap-2">
+        <i class="pi pi-spin pi-spinner" />
+        Cargando datos...
+      </div>
+
+      <!-- Tabla solo si no está cargando -->
+      <DataTable v-else :value="filteredData" :rows="rowsPerPage" paginator responsiveLayout="scroll"
         dataKey="id" class="p-datatable-sm" :aria-label="tableAriaLabel" :paginatorTemplate="{
           layout: 'PrevPageLink PageLinks NextPageLink RowsPerPageDropdown CurrentPageReport',
           CurrentPageReport: 'Mostrando {first} a {last} de {totalRecords} registros'
         }" :rowsPerPageOptions="[5, 10, 15, 25]">
-        <!-- Mensajes personalizados -->
-        <template #empty>
+        <!-- Mensaje de vacío -->
+        <template #empty v-if="filteredData.length === 0">
           <div class="py-4 text-center text-gray-500">
             No se encontraron registros que coincidan con la búsqueda
-          </div>
-        </template>
-
-        <template #loading>
-          <div class="py-4 text-center text-gray-500 flex items-center justify-center gap-2">
-            <i class="pi pi-spin pi-spinner" />
-            Cargando datos...
           </div>
         </template>
 
@@ -163,18 +163,14 @@ const tableAriaLabel = 'Tabla de datos interactiva';
 @media (max-width: 640px) {
   h2 {
     font-size: 1.5rem;
-    /* 24px en mobile */
     line-height: 2rem;
-    /* Leading ajustado */
     margin-bottom: 1rem;
-    /* Menos espacio en mobile */
   }
 }
 
 @media (min-width: 641px) and (max-width: 768px) {
   h2 {
     font-size: 1.875rem;
-    /* 30px en sm */
   }
 }
 </style>

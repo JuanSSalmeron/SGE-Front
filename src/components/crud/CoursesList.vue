@@ -75,7 +75,7 @@ const handleDelete = (id: number) => {
 
 <template>
   <AppLayout>
-    <div class="p-6 bg-gray-100">
+    <div class="p-6">
       <GeneralTable :title="'Cursos Escolares'" :data="dataEntity" :columns="columns" @edit="openEditModal"
         @delete="handleDelete" @create="openCreateModal" />
 

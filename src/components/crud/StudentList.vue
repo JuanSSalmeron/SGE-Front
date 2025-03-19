@@ -1,8 +1,8 @@
 <template>
   <AppLayout>
-    <div class="p-6 bg-gray-100">
-      <GeneralTable :title="'Estudiantes'" :data="dataEntity" :columns="columns" @edit="openEditModal"
-        @delete="handleDelete" @create="openCreateModal" />
+    <div class="p-6">
+      <GeneralTable :loading="loading" :title="'Estudiantes'" :data="studentsStore.studentsList" :columns="columns"
+        @edit="openEditModal" @delete="handleDelete" @create="openCreateModal" />
 
       <!-- Modal para Crear -->
       <Dialog v-model:visible="showCreateModal" header="Crear Registro" :modal="true" class="rounded-lg shadow-lg">
@@ -38,37 +38,55 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import GeneralTable from '@/components/GeneralTable.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import AppLayout from '@/layout/AppLayout.vue';
+import { useStudentStore } from '@/stores/StudentStore';
+import type { IColumns } from '@/types/GenericTable';
+import type { IStudent } from '@/types/Students';
+const loading = ref<boolean>(false);
 
-const dataEntity = ref([
-  { id: 1, nombre: 'Emiliano', matricula: '22393278', fechaIngreso: '2025-01-15', estado: 'activo' },
-  { id: 2, nombre: 'Aldair', matricula: '22393277', fechaIngreso: '2025-01-15', estado: 'activo' },
-  { id: 3, nombre: 'Julian', matricula: '22393278', fechaIngreso: '2025-01-15', estado: 'baja' },
-]);
-
-const columns = [
-  { field: 'nombre', header: 'Nombre' },
+const columns: IColumns[] = [
+  { field: 'nombreCompleto', header: 'Nombre Completo' },
   { field: 'matricula', header: 'Matricula' },
   { field: 'fechaIngreso', header: 'Fecha de Ingreso' },
   { field: 'estado', header: 'Estado' },
+  { field: 'cursoEscolar', header: 'Curso Escolar' },
 ];
+
+const studentsStore = useStudentStore();
+
+const GetStudents = async () => {
+  loading.value = true;
+  try {
+    const results = await studentsStore.GetStoreStudents();
+    if (results?.success) {
+      setTimeout(() => {
+        loading.value = false;
+      }, 1000);
+    } else {
+      loading.value = false;
+    }
+  } catch (error) {
+    console.error('Error al obtener estudiantes:', error);
+    loading.value = false;
+  }
+}
+
+onMounted(async () => {
+  await GetStudents()
+})
 
 const showCreateModal = ref(false);
 const showEditModal = ref(false);
 const newItem = ref({});
-const editItem = ref({});
+const editItem = ref({} as IStudent);
 const currentEditId = ref(null);
 
 const openCreateModal = () => {
-  newItem.value = { id: dataEntity.value.length + 1 };
-  columns.forEach(col => {
-    newItem.value[col.field] = '';
-  });
   showCreateModal.value = true;
 };
 
@@ -80,12 +98,13 @@ const handleCreate = () => {
   showCreateModal.value = false;
 };
 
-const openEditModal = (id) => {
-  const item = dataEntity.value.find(item => item.id === id);
-  if (item) {
-    editItem.value = { ...item };
-    currentEditId.value = id;
-    showEditModal.value = true;
+const openEditModal = async (id: number) => {
+  showEditModal.value = true;
+  const response = await studentsStore.GetStoreStudent(id);
+  console.log(response)
+  if (response?.success === true) {
+    editItem.value = studentsStore.student;
+    console.log(editItem);
   }
 };
 
