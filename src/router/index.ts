@@ -8,23 +8,8 @@ const router = createRouter({
       name: 'LandingPage',
       component: () => import("@/views/landing/LandingView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
-      }
-    },
-    {
-      path: '/AboutUs',
-      name: 'AboutUs',
-      component: () => import("@/components/landing/AboutUs.vue"),
-      meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
-      }
-    },
-    {
-      path: '/ExamplePrimeVue',
-      name: 'examplenn',
-      component: () => import("@/views/ExamplePrimeVue.vue"),
-      meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
     {
@@ -32,7 +17,8 @@ const router = createRouter({
       name: 'login',
       component: () => import("@/views/auth/LoginView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
     {
@@ -40,18 +26,91 @@ const router = createRouter({
       name: 'register',
       component: () => import("@/views/auth/RegisterView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
     },
-    // Example: Use Correctly routes protected
     {
-      path: '/protected',
-      name: 'protected',
-      component: () => import("@/views/ExampleProtected.vue"),
+      path: '/password',
+      name: 'password',
+      component: () => import("@/views/auth/PasswordView.vue"),
       meta: {
-        requiresAuth: false, // requiresAuth is a property obligatory.
+        requiresAuth: false,
+        MenuOnly: false,
       }
-    }
+    },
+     {
+      path: '/:patchMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/errors/NotFoundView.vue'),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: false,
+      },
+    },
+
+
+    //Rutas del Navbars
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/IndexView.vue'),
+      meta: {
+        requiresAuth: true,
+        MenuOnly: true,
+        icon: 'pi pi-chart-pie'
+      }
+    },
+    {
+      path: '/students',
+      name: 'Estudiantes',
+      component: () => import("@/views/crud/StudentView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: true,
+        icon: 'pi pi-users'
+      }
+    },
+    {
+      path: '/periods',
+      name: 'Periodos',
+      component: () => import("@/views/crud/PeriodsView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: true,
+        icon: 'pi pi-calendar-clock'
+      }
+    },
+        {
+      path: '/subjects',
+      name: 'Materias',
+      component: () => import("@/views/crud/SubjetcView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: true,
+        icon: 'pi pi-book'
+      }
+    },
+    {
+      path: '/courses',
+      name: 'Cursos',
+      component: () => import("@/views/crud/CoursesView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: true,
+        icon: 'pi pi-th-large'
+      }
+    },
+    {
+      path: '/groups',
+      name: 'Grupos',
+      component: () => import("@/views/crud/GroupsView.vue"),
+      meta: {
+        requiresAuth: false,
+        MenuOnly: true,
+        icon: 'pi pi-sitemap'
+      }
+    },
   ],
 })
 
