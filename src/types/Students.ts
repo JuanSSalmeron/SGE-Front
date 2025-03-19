@@ -1,7 +1,8 @@
-export interface Students {
+export interface IStudent {
   id: number;
-  nombre: string;
-  matricula: string;
-  fechaIngreso: string;
-  estado: string;
+  nombreCompleto: string;
+  matricula: number;
+  fechaIngreso: Date;
+  estado: boolean;
+  cursoEscolar: string;
 }

@@ -2,12 +2,13 @@ import type { RequestOptions } from "@/types/RequestOptions";
 import type { ResponseHelper } from "@/types/ResponseHelper";
 import axios, { AxiosError } from "axios";
 
-
+const baseURL = import.meta.env.VITE_URL_API || "https://localhost:5174/api";
 export async function GenericRequest<T>({url, method, headers, params, data, authToken
 }: RequestOptions){
   try {
+    const urlCompleted = `${baseURL}/${url}`;
     const response = await axios({
-      url,
+      url: urlCompleted,
       method,
       headers: {
         ...(headers ? { "Content-Type": headers } : {}),
