@@ -37,27 +37,13 @@ const formattedSchoolYears = computed(() => {
   return schoolYearStore.schoolYearsList;
 });
 
-watch(selectedPerson, (newPerson) => {
-  if (newPerson) {
-    props.modalItem.idPersona = newPerson.id;
-  }
-});
 
-watch(selectedSchoolYear, (newSchoolYear) => {
-  if (newSchoolYear) {
-    props.modalItem.idCursoEscolar = newSchoolYear.id;
+watch(() => props.showModal, (newVal) => {
+  if (newVal) {
+    selectedPerson.value = formattedPersons.value.find(x => x.id === props.modalItem.idPersona) || null;
+    selectedSchoolYear.value = formattedSchoolYears.value.find(x => x.id === props.modalItem.idCursoEscolar) || null;
   }
-});
-
-// Initialize selections when props.modalItem changes (for edit mode)
-watch(() => props.modalItem, (newItem) => {
-  if (newItem?.idPersona) {
-    selectedPerson.value = formattedPersons.value.find(p => p.id === newItem.idPersona) || null;
-  }
-  if (newItem?.idCursoEscolar) {
-    selectedSchoolYear.value = formattedSchoolYears.value.find(s => s.id === newItem.idCursoEscolar) || null;
-  }
-}, { immediate: true, deep: true });
+}, { immediate: true });
 
 defineEmits<{
   (e: 'close'): void;
