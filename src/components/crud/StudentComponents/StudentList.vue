@@ -72,8 +72,6 @@ const DeleteConfirm = async (id: number) => {
   }
 }
 
-
-
 onMounted(async () => {
   loading.value = true;
   try {
