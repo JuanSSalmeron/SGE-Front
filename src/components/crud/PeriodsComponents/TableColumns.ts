@@ -6,4 +6,5 @@ export const columns: IColumns[] = [
   { field: 'descripcion', header: 'Descripción' },
   { field: 'fechaInicio', header: 'Fecha de Inicio' },
   { field: 'fechaFin', header: 'Fecha de Fin' },
+  { field: 'estatusPeriodo', header: 'Estatus del Periodo' },
 ];

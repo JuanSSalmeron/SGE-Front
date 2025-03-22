@@ -4,15 +4,13 @@ import GeneralTable from '@/components/GeneralTable.vue';
 import {usePeriodsStore} from '@/stores/PeriodsStore';
 import { useToast } from "primevue/usetoast";
 import Toast from 'primevue/toast';
-import { columns } from './PeriodsComponents/TableColumns';
+import { columns } from './TableColumns';
 import { GetPeriods } from '@/utils/helpers';
-import CreateModal from './PeriodsComponents/Modals/CreateModal.vue'
-import DeleteModal from './DeleteModal.vue';
-import EditModal from './PeriodsComponents/Modals/EditModal.vue';
-import type { IPeriods } from '@/types/Periods';
-
+import CreateModal from '@/components/crud/PeriodsComponents/Modals/CreateModal.vue';
+import DeleteModal from '@/components/crud/DeleteModal.vue';
+import EditModal from '@/components/crud/PeriodsComponents/Modals/EditModal.vue';
+import { estatusPeriodo, type IPeriods } from '@/types/Periods';
 import AppLayout from '@/layout/AppLayout.vue';
-
 
 const toast = useToast();
 const loading = ref<boolean>(false);
@@ -27,7 +25,7 @@ const CreateConfirm = async (periods: IPeriods) => {
   const response = await periodsStore.PostStorePeriod(periods);
   if (response?.success) {
     openModalCreate.value = false;
-    toast.add({ severity: 'success', summary: '¡Creado Correctamente!', detail: '¡Se ha creado al alumno!', life: 2000 });
+    toast.add({ severity: 'success', summary: '¡Creado Correctamente!', detail: '¡Se ha creado el periodo!', life: 2000 });
   } else {
     toast.add({ severity: 'error', summary: '¡Ocurrio un error!', detail: response?.message, life: 2000 });
   }
@@ -47,7 +45,7 @@ const HandleEdit = async (id: number) => {
   const response = await periodsStore.GetStorePeriod(id);
   if (response?.success) {
     openModalEdit.value = true;
-    modalItem.value = response.data
+    modalItem.value = periodsStore.period;
   } else {
     toast.add({ severity: 'error', summary: 'No se encontro el periodo', detail: 'Verifica su existencia', life: 2000 });
   }
@@ -67,14 +65,11 @@ const DeleteConfirm = async (id: number) => {
   const response = await periodsStore.DeleteStorePeriod(id);
   if (response?.success) {
     openModalDelete.value = false;
-    toast.add({ severity: 'success', summary: 'Eliminado Correctamente!', detail: '¡Se ha Eliminado al alumno!', life: 2000 });
+    toast.add({ severity: 'success', summary: 'Eliminado Correctamente!', detail: '¡Se ha Eliminado el periodo!', life: 2000 });
   } else {
     toast.add({ severity: 'error', summary: '¡Ocurrio un error!', detail: response?.message, life: 2000 });
   }
 }
-
-
-
 
 onMounted(async () => {
   loading.value = true;
@@ -90,15 +85,18 @@ onMounted(async () => {
   }
 });
 
-
-
-
-
-
+const FormatDate = () => {
+  return periodsStore.periodsList.map((period) => {
+    return {
+      ...period,
+      estatusPeriodo: estatusPeriodo[period.estatusPeriodo],
+      fechaInicio: new Date(period.fechaInicio).toLocaleDateString(),
+      fechaFin: new Date(period.fechaFin).toLocaleDateString()
+    }
+  })
+}
 
 </script>
-
-
 
 <template>
   <AppLayout>
@@ -106,7 +104,7 @@ onMounted(async () => {
     <GeneralTable
     :title="'Periodos'"
     :columns="columns"
-    :data="periodsStore.periodsList"
+    :data="FormatDate()"
     :loading="loading"
     @edit="HandleEdit"
     @delete="HandleDelete"

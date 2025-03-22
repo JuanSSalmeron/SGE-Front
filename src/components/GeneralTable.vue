@@ -51,14 +51,7 @@ const filteredData = computed(() => {
 const tableAriaLabel = 'Tabla de datos interactiva';
 
 
-const formatValue = (value: any) => {
-  if (!value) return '';
-  if (value instanceof Date || (typeof value === 'string' && !isNaN(Date.parse(value)))) {
-    const date = new Date(value);
-    return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }); // Para fechas
-  }
-  return String(value); // Para valores no fecha
-};
+
 </script>
 
 <template>
@@ -102,7 +95,7 @@ const formatValue = (value: any) => {
           :sortable="col.sortable ?? false" :filterable="col.filterable ?? false"
           headerClass="bg-gray-50 text-gray-700 font-semibold" class="text-sm">
           <template #body="{ data }">
-            <span class="truncate block">{{ formatValue(data[col.field]) }}</span>
+            <span class="truncate block">{{ data[col.field] }}</span>
           </template>
         </Column>
 

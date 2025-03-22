@@ -1,4 +1,4 @@
-import type { IPeriods } from "@/types/Periods";
+import { estatusPeriodo, type IPeriods } from "@/types/Periods";
 import { GenericRequest } from "../GenericRequest";
 
 const urlBase = "Periodos";
@@ -17,6 +17,7 @@ export async function PostPeriod(period: IPeriods){
     descripcion: period.descripcion,
     fechaInicio: period.fechaInicio,
     fechaFin: period.fechaFin,
+    estatusPeriodo: period.estatusPeriodo
   }});
 }
 
@@ -34,6 +35,7 @@ export async function PutPeriod(period: IPeriods){
     descripcion: period.descripcion,
     fechaInicio: period.fechaInicio,
     fechaFin: period.fechaFin,
+    estatusPeriodo: period.estatusPeriodo
   }});
 }
 
