@@ -49,6 +49,9 @@ const filteredData = computed(() => {
 });
 
 const tableAriaLabel = 'Tabla de datos interactiva';
+
+
+
 </script>
 
 <template>
